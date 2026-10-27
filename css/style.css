@@ -1,0 +1,249 @@
+/* ============================================================
+   墨家网站 · 设计规范
+   宣纸 #F3EEE3 · 墨黑 #141414 · 朱砂 #B03A2E（仅用于引文/节号/细线/标记）
+   思源宋体 · 行距 1.9 · 窄栏约 31em · 所有线条 0.5px
+   ============================================================ */
+
+:root {
+  --paper: #F3EEE3;
+  --ink: #141414;
+  --vermilion: #B03A2E;
+  --gray: #8d867a;
+  --line-ink: rgba(20, 20, 20, 0.16);
+  --line-verm: rgba(176, 58, 46, 0.55);
+  --serif: "Noto Serif SC", "Source Han Serif SC", "Source Han Serif CN", "Songti SC", "STSong", "SimSun", serif;
+  --mono: "SF Mono", "JetBrains Mono", "Menlo", "Consolas", "Courier New", monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.9;
+  letter-spacing: 0.015em;
+  min-height: 100vh;
+}
+
+a { color: inherit; }
+
+/* ---------- 通用 ---------- */
+.reading { max-width: 31em; }
+
+.hairline { border: none; border-top: 0.5px solid var(--line-ink); }
+.hairline-verm { border: none; border-top: 0.5px solid var(--line-verm); }
+
+.verm-rule { width: 64px; height: 0.5px; background: var(--vermilion); }
+
+.section-no {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--vermilion);
+  letter-spacing: 0.12em;
+}
+
+/* ---------- 顶部导航（子页面） ---------- */
+.site-head { border-bottom: 0.5px solid var(--line-ink); }
+.site-head-inner {
+  max-width: 1180px; margin: 0 auto; padding: 26px 72px;
+  display: flex; align-items: baseline; justify-content: space-between;
+}
+.wordmark { font-size: 20px; font-weight: 700; letter-spacing: 0.3em; text-decoration: none; }
+.wordmark .sub { font-size: 11px; font-weight: 400; color: var(--gray); letter-spacing: 0.15em; margin-left: 10px; }
+.site-nav { display: flex; gap: 34px; }
+.site-nav a {
+  font-size: 14px; letter-spacing: 0.16em; text-decoration: none; color: var(--ink);
+  position: relative; padding-bottom: 4px;
+}
+.site-nav a::after {
+  content: ""; position: absolute; left: 0; bottom: 0;
+  width: 0; height: 0.5px; background: var(--vermilion);
+  transition: width 0.3s ease;
+}
+.site-nav a:hover::after { width: 100%; }
+.site-nav a.current { color: var(--vermilion); }
+
+/* ---------- 子页面框架 ---------- */
+.page { max-width: 1180px; margin: 0 auto; padding: 72px 72px 140px; }
+.page-title { font-size: 40px; font-weight: 700; letter-spacing: 0.06em; line-height: 1.3; }
+.page-lead { margin-top: 18px; color: var(--gray); font-size: 15px; max-width: 30em; }
+.page-section { margin-top: 72px; }
+.page-section + .page-section { margin-top: 96px; }
+
+/* ============================================================
+   首页
+   ============================================================ */
+.page-home { min-height: 100vh; }
+.home {
+  max-width: 1280px; margin: 0 auto; padding: 88px 96px;
+  display: flex; min-height: 100vh;
+}
+.home-left { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.home-kicker { font-family: var(--mono); font-size: 12px; letter-spacing: 0.4em; color: var(--gray); margin-bottom: 40px; }
+.home-title { font-size: clamp(46px, 6vw, 76px); font-weight: 900; letter-spacing: 0.05em; line-height: 1.22; }
+.home-sub { margin-top: 40px; color: var(--ink); font-size: 17px; max-width: 30em; }
+.home-questions { margin-top: 20px; color: var(--gray); font-size: 14px; max-width: 32em; line-height: 2.1; }
+.home-nav { margin-top: 88px; max-width: 30em; }
+.home-nav a {
+  display: flex; align-items: baseline; gap: 26px;
+  padding: 18px 0; text-decoration: none; color: var(--ink);
+  border-top: 0.5px solid var(--line-ink);
+}
+.home-nav a:last-child { border-bottom: 0.5px solid var(--line-ink); }
+.home-nav .sec-no { min-width: 1.6em; }
+.home-nav .sec-title {
+  font-size: 24px; font-weight: 500; letter-spacing: 0.3em; position: relative; padding-bottom: 6px;
+}
+.home-nav .sec-title::after {
+  content: ""; position: absolute; left: 0; bottom: 0;
+  width: 0; height: 0.5px; background: var(--vermilion); transition: width 0.35s ease;
+}
+.home-nav a:hover .sec-title::after { width: 100%; }
+
+.home-right {
+  width: 110px; display: flex; align-items: center; justify-content: center; gap: 18px;
+}
+.home-right .vertical-line { width: 0.5px; height: 56vh; background: var(--line-ink); }
+.home-right .vertical-text {
+  writing-mode: vertical-rl; text-orientation: mixed;
+  font-size: 15px; letter-spacing: 0.42em; color: var(--gray); white-space: nowrap;
+}
+
+/* ============================================================
+   学派源流（时间轴）
+   ============================================================ */
+.timeline { position: relative; padding-left: 88px; margin-top: 64px; }
+.timeline::before {
+  content: ""; position: absolute; left: 22px; top: 6px; bottom: 6px;
+  width: 0.5px; background: var(--line-ink);
+}
+.tl-item { position: relative; padding: 0 0 72px; }
+.tl-item::before {
+  content: ""; position: absolute; left: 22px; transform: translateX(-50%);
+  top: 10px; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--vermilion);
+}
+.tl-body { max-width: 40em; }
+.tl-item:nth-child(even) .tl-body { margin-left: 56px; }
+.tl-head { display: flex; align-items: baseline; gap: 18px; }
+.tl-era { font-size: 26px; font-weight: 700; letter-spacing: 0.16em; }
+.tl-title { margin-top: 10px; font-size: 17px; font-weight: 500; color: var(--ink); }
+.tl-text { margin-top: 14px; font-size: 15px; color: var(--ink); max-width: 30em; }
+.tl-quote {
+  margin-top: 22px; font-size: 16px; color: var(--vermilion); line-height: 1.9;
+}
+.tl-quote cite { display: block; font-size: 12px; color: var(--gray); margin-top: 6px; }
+.tl-divider { width: 3cm; height: 0.5px; background: var(--vermilion); margin-top: 28px; }
+
+/* ============================================================
+   代表人物
+   ============================================================ */
+.person { display: grid; grid-template-columns: 1fr 220px; column-gap: 72px; padding: 76px 0; }
+.person + .person { border-top: 0.5px solid var(--line-ink); }
+.person-name { font-size: 46px; font-weight: 700; letter-spacing: 0.08em; line-height: 1.2; }
+.person-name .pinyin { font-family: var(--mono); font-size: 13px; color: var(--gray); letter-spacing: 0.1em; margin-left: 14px; font-weight: 400; }
+.person-main .hairline { margin: 26px 0 30px; }
+.person-body { max-width: 31em; font-size: 15px; }
+.person-body blockquote {
+  margin-top: 28px; font-size: 16px; color: var(--vermilion); line-height: 1.9;
+}
+.person-body blockquote cite { display: block; font-size: 12px; color: var(--gray); margin-top: 8px; }
+.person-note {
+  font-size: 12px; color: var(--gray); line-height: 2.1;
+  border-left: 0.5px solid var(--line-ink); padding-left: 24px;
+  align-self: start;
+}
+.person-foot { margin-top: 8px; font-size: 12px; color: var(--gray); max-width: 34em; }
+
+/* ============================================================
+   思想总览（关系图）
+   ============================================================ */
+.rel-wrap { margin-top: 64px; max-width: 620px; }
+.rel-diagram { width: 100%; height: auto; display: block; }
+.rel-line { stroke: var(--line-ink); stroke-width: 0.5; vector-effect: non-scaling-stroke; transition: stroke 0.3s ease; }
+.rel-label { fill: var(--ink); font-family: var(--serif); font-size: 24px; letter-spacing: 0.2em; }
+.rel-center { fill: var(--ink); font-family: var(--serif); font-size: 48px; font-weight: 700; letter-spacing: 0.1em; }
+.rel-group a { text-decoration: none; }
+.rel-group:hover .rel-line { stroke: var(--line-verm); }
+.rel-group:hover .rel-label { fill: var(--vermilion); }
+.rel-center-link:hover .rel-center { fill: var(--vermilion); }
+.rel-note { margin-top: 48px; max-width: 30em; }
+.rel-note p { font-size: 13px; color: var(--gray); line-height: 2; }
+.rel-note p + p { margin-top: 12px; }
+
+/* ============================================================
+   思想详情页
+   ============================================================ */
+.thought-head { margin-bottom: 56px; }
+.thought-head .verm-rule { margin-bottom: 40px; }
+.thought-title { font-size: 48px; font-weight: 700; letter-spacing: 0.12em; line-height: 1.2; }
+.thought-quote { margin-top: 26px; font-size: 22px; color: var(--vermilion); line-height: 1.85; font-weight: 500; max-width: 24em; }
+.thought-quote cite { display: block; font-size: 12px; color: var(--gray); font-weight: 400; margin-top: 12px; letter-spacing: 0.05em; }
+
+.thought-grid { display: grid; grid-template-columns: 1fr 240px; column-gap: 72px; }
+.thought-body { max-width: 31em; }
+.thought-body section { padding: 30px 0; }
+.thought-body section + section { border-top: 0.5px solid var(--line-ink); }
+.thought-body h2 { font-size: 15px; font-weight: 600; letter-spacing: 0.32em; color: var(--gray); margin-bottom: 18px; }
+.thought-body p { font-size: 15px; }
+.thought-body p + p { margin-top: 14px; }
+.thought-body blockquote { margin: 14px 0; color: var(--ink); font-size: 15px; }
+
+.triple { list-style: none; margin-top: 18px; }
+.triple li { display: flex; gap: 18px; padding: 11px 0; border-top: 0.5px solid var(--line-ink); }
+.triple li:last-child { border-bottom: 0.5px solid var(--line-ink); }
+.triple .term { font-family: var(--mono); font-size: 14px; color: var(--vermilion); min-width: 2.2em; letter-spacing: 0.05em; }
+
+.thought-note {
+  font-size: 12px; color: var(--gray); line-height: 2.1;
+  border-left: 0.5px solid var(--line-ink); padding-left: 24px;
+  align-self: start;
+}
+.thought-back { margin-top: 72px; }
+.thought-back a { text-decoration: none; font-size: 14px; letter-spacing: 0.1em; color: var(--ink); }
+.thought-back a:hover { color: var(--vermilion); }
+
+/* ============================================================
+   附录
+   ============================================================ */
+.three-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 56px; margin-top: 48px; }
+.three-col .ruler { border-top: 0.5px solid var(--line-ink); position: relative; margin-bottom: 28px; }
+.three-col .ruler::before {
+  content: ""; position: absolute; top: -5px; left: 0; right: 0; height: 9px;
+  background-image: repeating-linear-gradient(to right, rgba(20,20,20,0.42) 0 0.5px, transparent 0.5px 18px);
+}
+.three-col h3 { font-size: 22px; font-weight: 700; letter-spacing: 0.24em; margin-bottom: 14px; }
+.three-col p { font-size: 14px; text-align: left; }
+
+.mojing-list { margin-top: 40px; max-width: 40em; }
+.mojing-intro { font-size: 13px; color: var(--gray); margin-bottom: 8px; }
+.mojing-item { display: grid; grid-template-columns: 60px 1fr; gap: 28px; padding: 20px 0; border-top: 0.5px solid var(--line-ink); }
+.mojing-item:last-child { border-bottom: 0.5px solid var(--line-ink); }
+.mojing-item .no { font-family: var(--mono); font-size: 13px; color: var(--vermilion); letter-spacing: 0.08em; padding-top: 2px; }
+.mojing-item .yuanwen { font-size: 16px; }
+.mojing-item .shiyi { font-size: 13px; color: var(--gray); margin-top: 4px; }
+
+.ref-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; margin-top: 40px; }
+.ref-col h3 { font-size: 15px; font-weight: 600; letter-spacing: 0.3em; color: var(--gray); margin-bottom: 22px; }
+.ref-col ol { list-style: none; }
+.ref-col li { font-size: 13px; line-height: 2; margin-bottom: 16px; }
+.ref-col li .no { font-family: var(--mono); color: var(--vermilion); margin-right: 6px; font-size: 12px; }
+.ref-date { margin-top: 24px; font-size: 12px; color: var(--gray); }
+
+/* ============================================================
+   响应式
+   ============================================================ */
+@media (max-width: 900px) {
+  .site-head-inner, .page, .home { padding-left: 28px; padding-right: 28px; }
+  .home { flex-direction: column; padding-top: 56px; }
+  .home-right { display: none; }
+  .person, .thought-grid { grid-template-columns: 1fr; }
+  .person-note, .thought-note { border-left: none; border-top: 0.5px solid var(--line-ink); padding-left: 0; padding-top: 16px; margin-top: 24px; }
+  .three-grid, .ref-grid { grid-template-columns: 1fr; }
+  .timeline { padding-left: 48px; }
+  .tl-item:nth-child(even) .tl-body { margin-left: 0; }
+}
