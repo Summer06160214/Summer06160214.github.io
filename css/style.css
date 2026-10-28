@@ -20,7 +20,8 @@
 html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
 
 body {
-  background: var(--paper);
+  background-color: var(--paper);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
   color: var(--ink);
   font-family: var(--serif);
   font-size: 17px;
@@ -114,30 +115,58 @@ a { color: inherit; }
 }
 
 /* ============================================================
-   学派源流（时间轴）
+   学派源流（横向可拖拽时间轴）
    ============================================================ */
-.timeline { position: relative; padding-left: 88px; margin-top: 64px; }
-.timeline::before {
-  content: ""; position: absolute; left: 22px; top: 6px; bottom: 6px;
-  width: 0.5px; background: var(--line-ink);
+.timeline {
+  margin-top: 64px;
+  overflow-x: auto;
+  cursor: grab;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(20, 20, 20, 0.25) transparent;
+  padding-bottom: 32px;
 }
-.tl-item { position: relative; padding: 0 0 72px; }
-.tl-item::before {
-  content: ""; position: absolute; left: 22px; transform: translateX(-50%);
-  top: 10px; width: 7px; height: 7px; border-radius: 50%;
-  background: var(--vermilion);
+.timeline.dragging { cursor: grabbing; user-select: none; }
+.tl-track {
+  display: flex; align-items: stretch; gap: 64px;
+  min-width: max-content;
+  position: relative;
 }
-.tl-body { max-width: 40em; }
-.tl-item:nth-child(even) .tl-body { margin-left: 56px; }
+.tl-track::before {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0;
+  height: 0.5px; background: var(--line-ink);
+}
+.tl-node {
+  width: 340px; flex: none;
+  display: flex; flex-direction: column;
+}
+.tl-card {
+  border: 0.5px solid var(--line-ink);
+  padding: 26px 28px 24px;
+  flex: 1;
+  transition: border-color 0.3s ease;
+}
+.tl-node:hover .tl-card { border-color: var(--line-verm); }
 .tl-head { display: flex; align-items: baseline; gap: 18px; }
-.tl-era { font-size: 26px; font-weight: 700; letter-spacing: 0.16em; }
-.tl-title { margin-top: 10px; font-size: 17px; font-weight: 500; color: var(--ink); }
-.tl-text { margin-top: 14px; font-size: 15px; color: var(--ink); max-width: 30em; }
-.tl-quote {
-  margin-top: 22px; font-size: 16px; color: var(--vermilion); line-height: 1.9;
-}
+.tl-era { font-size: 24px; font-weight: 700; letter-spacing: 0.16em; transition: color 0.25s ease; }
+.tl-node:hover .tl-era { color: var(--vermilion); }
+.tl-title { margin-top: 12px; font-size: 17px; font-weight: 500; color: var(--ink); }
+.tl-text { margin-top: 14px; font-size: 15px; color: var(--ink); line-height: 1.9; }
+.tl-quote { margin-top: 22px; font-size: 16px; color: var(--vermilion); line-height: 1.9; }
 .tl-quote cite { display: block; font-size: 12px; color: var(--gray); margin-top: 6px; }
-.tl-divider { width: 3cm; height: 0.5px; background: var(--vermilion); margin-top: 28px; }
+.tl-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--vermilion);
+  margin-top: 34px;
+  transition: transform 0.25s ease;
+}
+.tl-node:hover .tl-dot { transform: scale(1.9); }
+
+/* 入场动画（仅 JS 可用时，见 <head> 的 .js 标记） */
+.js .tl-node { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.js .tl-node.in { opacity: 1; transform: none; }
+.js .tl-track::before { transform: scaleX(0); transform-origin: left center; transition: transform 0.9s ease 0.15s; }
+.js .timeline.in .tl-track::before { transform: scaleX(1); }
 
 /* ============================================================
    代表人物
@@ -273,8 +302,36 @@ a { color: inherit; }
   .person, .thought-grid { grid-template-columns: 1fr; }
   .person-note, .thought-note { border-left: none; border-top: 0.5px solid var(--line-ink); padding-left: 0; padding-top: 16px; margin-top: 24px; }
   .three-grid, .ref-grid { grid-template-columns: 1fr; }
-  .timeline { padding-left: 48px; }
-  .tl-item:nth-child(even) .tl-body { margin-left: 0; }
   .fig--person { float: none; width: 100%; margin: 24px 0; }
   .fig--home { padding-left: 28px; padding-right: 28px; }
 }
+
+/* ============================================================
+   阅读进度线（朱砂细线，随滚动生长）
+   ============================================================ */
+.progress {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 1px; background: var(--vermilion);
+  transform: scaleX(0); transform-origin: 0 50%;
+  z-index: 50;
+}
+
+/* ============================================================
+   切页淡入
+   ============================================================ */
+@keyframes page-fade { from { opacity: 0; } to { opacity: 1; } }
+body { animation: page-fade 0.45s ease both; }
+
+/* ============================================================
+   首页首屏错落入场
+   ============================================================ */
+@keyframes home-in {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+.page-home .home-kicker { animation: home-in 0.7s ease 0.05s both; }
+.page-home .home-title { animation: home-in 0.7s ease 0.18s both; }
+.page-home .home-sub { animation: home-in 0.7s ease 0.32s both; }
+.page-home .home-questions { animation: home-in 0.7s ease 0.44s both; }
+.page-home .home-nav { animation: home-in 0.7s ease 0.58s both; }
+.page-home .home-right { animation: home-in 0.7s ease 0.32s both; }

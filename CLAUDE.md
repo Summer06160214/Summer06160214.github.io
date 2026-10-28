@@ -1,12 +1,13 @@
 # 墨家网站 · 项目约定
 
-先秦墨家中文学术网站。纯静态 HTML/CSS，无构建步骤、无 JS 依赖（思想关系图用内联 SVG + CSS hover）。
+先秦墨家中文学术网站。纯静态 HTML/CSS，无构建步骤；交互脚本统一放在 `js/main.js`（单文件原生 JS，无框架、无依赖，仅用于 CSS 无法实现的拖拽/滚动类交互）。
 
 ## 目录结构
 - `index.html` 首页 · `yuanliu.html` 学派源流 · `renwu.html` 代表人物 · `sixiang.html` 思想总览
 - `jianai.html` / `feigong.html` / `shangxian.html` / `jieyong.html` 四页思想详情（二级页面，从 `sixiang.html` 进入）
 - `fulu.html` 附录（三表法 · 《墨经》 · 参考文献）
 - `css/style.css` 唯一样式表，所有设计变量定义在 `:root`
+- `js/main.js` 交互脚本（源流页横向时间轴的拖拽与入场动画）
 
 ## 设计规范（改样式前先看这里）
 - 色板：宣纸 `#F3EEE3` · 墨黑 `#141414` · 朱砂 `#B03A2E`（仅用于原典引文、节号、细线、印章式标记）· 眉批灰 `#8d867a`
