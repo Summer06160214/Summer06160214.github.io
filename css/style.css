@@ -232,6 +232,15 @@ a { color: inherit; }
 .ref-col ol { list-style: none; }
 .ref-col li { font-size: 13px; line-height: 2; margin-bottom: 16px; }
 .ref-col li .no { font-family: var(--mono); color: var(--vermilion); margin-right: 6px; font-size: 12px; }
+.ref-col a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: rgba(20, 20, 20, 0.4);
+  text-decoration-thickness: 0.5px;
+  text-underline-offset: 4px;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+.ref-col a:hover { color: var(--vermilion); text-decoration-color: var(--vermilion); }
 .ref-date { margin-top: 24px; font-size: 12px; color: var(--gray); }
 
 /* ============================================================
