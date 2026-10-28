@@ -171,6 +171,8 @@ a { color: inherit; }
 .rel-group:hover .rel-line { stroke: var(--line-verm); }
 .rel-group:hover .rel-label { fill: var(--vermilion); }
 .rel-center-link:hover .rel-center { fill: var(--vermilion); }
+.rel-group a, .rel-center-link { cursor: pointer; }
+.rel-hint { margin-top: 24px; font-size: 13px; color: var(--gray); }
 .rel-note { margin-top: 48px; max-width: 30em; }
 .rel-note p { font-size: 13px; color: var(--gray); line-height: 2; }
 .rel-note p + p { margin-top: 12px; }
