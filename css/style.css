@@ -258,7 +258,15 @@ a { color: inherit; }
 .mojing-item .yuanwen { font-size: 16px; }
 .mojing-item .shiyi { font-size: 13px; color: var(--gray); margin-top: 4px; }
 
+.ref-hint {
+  margin-top: 16px;
+  font-size: 13px;
+  color: var(--gray);
+  line-height: 1.9;
+}
+.ref-hint .accent { color: var(--vermilion); }
 .ref-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; margin-top: 40px; }
+.ref-hint + .ref-grid { margin-top: 24px; }
 .ref-col h3 { font-size: 15px; font-weight: 600; letter-spacing: 0.3em; color: var(--gray); margin-bottom: 22px; }
 .ref-col ol { list-style: none; }
 .ref-col li { font-size: 13px; line-height: 2; margin-bottom: 16px; }
@@ -292,7 +300,7 @@ a { color: inherit; }
 
 /* 配图定位 */
 .fig--lead { max-width: 680px; margin: 40px 0 60px; }
-.fig--home { max-width: 1280px; margin: 0 auto 96px; padding: 0 96px; }
+.fig--home { max-width: 1150px; margin: 0 auto 96px; padding: 0 96px; }
 .fig--person { float: right; width: 260px; margin: 4px 0 30px 36px; }
 
 @media (max-width: 900px) {
@@ -304,6 +312,7 @@ a { color: inherit; }
   .three-grid, .ref-grid { grid-template-columns: 1fr; }
   .fig--person { float: none; width: 100%; margin: 24px 0; }
   .fig--home { padding-left: 28px; padding-right: 28px; }
+  .site-credits { padding-left: 28px; padding-right: 28px; }
 }
 
 /* ============================================================
@@ -335,3 +344,56 @@ body { animation: page-fade 0.45s ease both; }
 .page-home .home-questions { animation: home-in 0.7s ease 0.44s both; }
 .page-home .home-nav { animation: home-in 0.7s ease 0.58s both; }
 .page-home .home-right { animation: home-in 0.7s ease 0.32s both; }
+
+/* ============================================================
+   正文来源编号（上标，跳转附录对应文献）
+   ============================================================ */
+.src {
+  font-family: var(--mono);
+  font-size: 0.72em;
+  color: var(--vermilion);
+  text-decoration: none;
+  margin-left: 4px;
+  vertical-align: super;
+}
+.src:hover { text-decoration: underline; text-underline-offset: 2px; }
+.ref-col li { transition: background 0.3s ease; }
+.ref-col li:target { background: rgba(176, 58, 46, 0.05); }
+
+/* ============================================================
+   思想详情页底部导航（上一 / 返回 / 下一）
+   ============================================================ */
+.thought-nav {
+  margin-top: 72px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-top: 0.5px solid var(--line-ink);
+  padding-top: 24px;
+}
+.thought-nav a { text-decoration: none; font-size: 14px; letter-spacing: 0.08em; color: var(--ink); transition: color 0.2s ease; }
+.thought-nav a:hover { color: var(--vermilion); }
+.thought-nav .tn-back { color: var(--ink); font-size: 16px; letter-spacing: 0.12em; }
+
+/* ============================================================
+   思想总览 · 当代意义快捷入口
+   ============================================================ */
+.rel-modern { margin-top: 56px; padding-top: 28px; border-top: 0.5px solid var(--line-ink); }
+.rm-title { font-size: 15px; font-weight: 600; letter-spacing: 0.32em; color: var(--gray); }
+.rm-lead { margin-top: 10px; font-size: 13px; color: var(--gray); max-width: 34em; line-height: 2; }
+.rm-links { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 12px 28px; }
+.rm-links a { font-size: 14px; color: var(--ink); text-decoration: none; letter-spacing: 0.06em; border-bottom: 0.5px solid var(--line-ink); padding-bottom: 2px; transition: color 0.2s ease, border-color 0.2s ease; }
+.rm-links a:hover { color: var(--vermilion); border-color: var(--vermilion); }
+
+/* ============================================================
+   首页署名（小组成员）
+   ============================================================ */
+.site-credits {
+  max-width: 1280px;
+  margin: 0 auto 96px;
+  padding: 0 96px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--ink);
+  letter-spacing: 0.18em;
+}
+.site-credits .credits-label { margin-right: 14px; }
+.site-credits .credits-names { letter-spacing: 0.3em; }
